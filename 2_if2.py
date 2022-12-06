@@ -15,12 +15,26 @@
 
 """
 
-def main():
-    """
-    Эта функция вызывается автоматически при запуске скрипта в консоли
-    В ней надо заменить pass на ваш код
-    """
-    pass
-    
+def str_check_1():
+   print("Введи строку 1")
+   write_str1 = input()
+   print("Введи строку 2")
+   write_str2 = input()
+ # print("Вы что-то ввели, щас проверим что")
+ 
+   if type(write_str1 and write_str2) == str:
+     print(f'Вы ввели строки')
+     if write_str1 == write_str2:
+       print('строки одинаковые')
+       return 1
+     if write_str1 != write_str2 and len(write_str1) > len(write_str2):
+       print("Строки разные и первая длиннее")
+       return 2
+     if write_str2 == 'learn':
+       print('Вторая строка это learn')
+       return 3
+   else:
+     print(0)
+
 if __name__ == "__main__":
-    main()
+    str_check_1()

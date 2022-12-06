@@ -15,17 +15,17 @@
 """
 def main():
 
-    def age():
-        write_age = int(input())
-        if 3 <= write_age < 7:
-            return 'Учиться в детском саду'
-        elif 7 <= write_age < 15:
-            return 'Учиться в школе'
-        elif 15 <= write_age < 100:
-            return 'Учиться в Вузе или работать'
-        else:
-            return 'Что-то пошло не так'
-    print(age())
+    write_age = int(input())
+    if 3 <= write_age < 7:
+        return 'Учиться в детском саду'
+    elif 7 <= write_age < 15:
+        return 'Учиться в школе'
+    elif 15 <= write_age < 100:
+        return 'Учиться в Вузе или работать'
+    else:
+        return 'Что-то пошло не так'
+
 
 if __name__ == "__main__":
-    main()
+   print(main())
+    

@@ -13,41 +13,40 @@
 
 """
 import logging
-
+import ephem
+import datetime
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO,
                     filename='bot.log')
 
-
-PROXY = {
-    'proxy_url': 'socks5://t1.learn.python.ru:1080',
-    'urllib3_proxy_kwargs': {
-        'username': 'learn',
-        'password': 'python'
-    }
-}
-
-
 def greet_user(update, context):
-    text = 'Вызван /start'
+    print("Вызван /start")
+    update.message.reply_text("Здравствуй, пользователь !")
+
+def talk_to_me(update, context):
+    text = update.message.text
     print(text)
     update.message.reply_text(text)
 
-
-def talk_to_me(update, context):
+def get_plannet_constellation(update, context):
     user_text = update.message.text
-    print(user_text)
-    update.message.reply_text(text)
+    planet_name = user_text.split()[1].capitalize()
+    if hasattr(ephem, planet_name):
+        planet = getattr(ephem, planet_name)(datetime.now())
+        update.message.reply_text(f"Планета {planet_name} находится в созвездии {ephem.constellation(planet)}")
+    else:
+        update.message.reply_text(f"Извините, я не знаю такую планету! Попробуйте ещё раз.")
 
 
 def main():
-    mybot = Updater("КЛЮЧ, КОТОРЫЙ НАМ ВЫДАЛ BotFather", request_kwargs=PROXY, use_context=True)
+    mybot = Updater("5319486409:AAG7og3clsLSCLtPc4CkjKbSXrv1xH9BrVg", use_context=True)
 
     dp = mybot.dispatcher
-    dp.add_handler(CommandHandler("start", greet_user))
-    dp.add_handler(MessageHandler(Filters.text, talk_to_me))
+    dp.add_handler(CommandHandler("start", greet_user, ))
+    dp.add_handler(MessageHandler(Filters.text, talk_to_me, get_plannet_constellation))
+    dp.add_handler(CommandHandler("planet", get_plannet_constellation))
 
     mybot.start_polling()
     mybot.idle()
