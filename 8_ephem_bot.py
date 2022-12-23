@@ -14,11 +14,11 @@
 """
 import logging
 import ephem
-import datetime
+from datetime import datetime
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO,
+                    level=logging.DEBUG,
                     filename='bot.log')
 
 def greet_user(update, context):
@@ -41,16 +41,13 @@ def get_plannet_constellation(update, context):
 
 
 def main():
-    mybot = Updater("5319486409:AAG7og3clsLSCLtPc4CkjKbSXrv1xH9BrVg", use_context=True)
+    mybot = Updater("    токен  вписать сюда       ", use_context=True)
 
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user, ))
-    dp.add_handler(MessageHandler(Filters.text, talk_to_me, get_plannet_constellation))
     dp.add_handler(CommandHandler("planet", get_plannet_constellation))
+    dp.add_handler(MessageHandler(Filters.text, talk_to_me))
+    
 
     mybot.start_polling()
     mybot.idle()
-
-
-if __name__ == "__main__":
-    main()
